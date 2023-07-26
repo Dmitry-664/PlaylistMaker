@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="12dp"
+    tools:context=".SettingsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginEnd="@dimen/end_margin">
+
+        <Button
+            android:id="@+id/buttonBack"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="@dimen/button_w"
+            android:layout_height="@dimen/button_h"
+            android:layout_gravity="center"
+            app:icon="@drawable/ic_back"
+            app:iconGravity="textStart"
+            app:iconTint="@color/black1"
+            android:backgroundTint="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/settings"
+            android:padding="6dp"
+            android:textAppearance="@style/style_2"/>
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_margin"
+        android:background="@color/white">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:text="@string/dark_theme"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="38dp"
+                android:textColor="@color/black2"
+                android:textAppearance="@style/origin"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@android:string/no"
+                android:thumb="@drawable/knob_switch"
+                android:track="@drawable/track_switch"
+                android:checked="false" />
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:text="@string/share_the_app"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="38dp"
+                android:textColor="@color/black2"
+                android:textAppearance="@style/origin" />
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:backgroundTint="@color/white"
+                android:contentDescription="@android:string/no"
+                app:iconGravity="end"
+                app:iconTint="@color/gray"
+                app:icon="@drawable/ic_share"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:text="@string/write_to_support"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="38dp"
+                android:textColor="@color/black2"
+                android:textAppearance="@style/origin" />
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:backgroundTint="@color/white"
+                android:contentDescription="@android:string/no"
+                app:iconGravity="end"
+                app:iconTint="@color/gray"
+                app:icon="@drawable/ic_support"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:text="@string/user_agreement"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="38dp"
+                android:textColor="@color/black2"
+                android:textAppearance="@style/origin"/>
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:backgroundTint="@color/white"
+                android:contentDescription="@android:string/no"
+                app:iconGravity="end"
+                app:iconTint="@color/gray"
+                app:icon="@drawable/ic_arrow"/>
+
+        </FrameLayout>
+</LinearLayout>

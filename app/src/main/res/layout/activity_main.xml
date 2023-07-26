@@ -1,18 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
+    android:orientation="vertical"
+    android:padding="@dimen/border_padding"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/playlist_maker"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/buttonContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/search"
+            android:textColor="@color/black"
+            android:textAppearance="@style/style_1"
+            app:cornerRadius="@dimen/cornerRadius"
+            app:icon="@drawable/ic_lupa"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/mid_padding"
+            app:iconTint="@color/black" />
+
+        <Button
+            android:id="@+id/buttonContainer2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/top_margin"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/media_library"
+            android:textColor="@color/black"
+            android:textAppearance="@style/style_1"
+            app:cornerRadius="@dimen/cornerRadius"
+            app:icon="@drawable/ic_nota"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/mid_padding"
+            app:iconTint="@color/black" />
+
+        <Button
+            android:id="@+id/buttonContainer3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/top_margin"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/settings"
+            android:textColor="@color/black"
+            android:textAppearance="@style/style_1"
+            app:cornerRadius="@dimen/cornerRadius"
+            app:icon="@drawable/ic_settings"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/mid_padding"
+            app:iconTint="@color/black" />
+
+    </LinearLayout>
+
+</LinearLayout>
