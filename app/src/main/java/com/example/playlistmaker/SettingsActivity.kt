@@ -48,13 +48,12 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
     private fun shareApp() {
-        val shareIntent = Intent()
-        shareIntent.action = Intent.ACTION_SEND
-        shareIntent.type = "text/plain"
-        val shareMessage = "Курсы от Яндекс-Практикума: " +
-                "https://practicum.yandex.ru/"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
-        startActivity(Intent(shareIntent))
+        Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            val shareMessage = getString(R.string.praktikum)
+            putExtra(Intent.EXTRA_TEXT, shareMessage)
+            startActivity(Intent(this))
+        }
     }
     @SuppressLint("QueryPermissionsNeeded")
     private fun supportApp() {
@@ -65,9 +64,7 @@ class SettingsActivity : AppCompatActivity() {
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email)))
         intent.putExtra(Intent.EXTRA_SUBJECT, topic)
         intent.putExtra(Intent.EXTRA_TEXT, message)
-        if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
-        }
     }
     private fun agreementApp() {
         val url = getString(R.string.yandex_offer)

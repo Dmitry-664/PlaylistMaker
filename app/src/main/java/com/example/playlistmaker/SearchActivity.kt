@@ -14,7 +14,7 @@ import android.widget.ImageView
 
 class SearchActivity : AppCompatActivity() {
     companion object {
-        const val SEARCH_QUERY = "SEARCH_QUERY"
+        private const val SEARCH_QUERY = "SEARCH_QUERY"
     }
     private lateinit var inputEditText: EditText
     private var currentSearchQuery: String = ""
@@ -36,7 +36,7 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
-        inputEditText = findViewById<EditText>(R.id.inputEditText)
+        inputEditText = findViewById(R.id.inputEditText)
         inputEditText.setOnClickListener{
         }
 
