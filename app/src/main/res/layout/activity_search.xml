@@ -74,7 +74,15 @@
             android:paddingBottom="6dp"
             android:src="@drawable/search_close_ic"
             android:visibility="invisible"
-            app:iconTint="@color/black1" />
+            style="@style/ClearIconSearch" />
     </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/track_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_search_layout" />
 
 </LinearLayout>

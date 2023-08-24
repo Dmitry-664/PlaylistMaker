@@ -44,6 +44,8 @@
 
             <TextView
                 style="@style/TextViewSettings"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="38dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="@string/dark_theme"
@@ -68,6 +70,8 @@
 
             <TextView
                 style="@style/TextViewSettings"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="38dp"
                 android:text="@string/share_the_app" />
 
             <Button
@@ -85,6 +89,8 @@
 
             <TextView
                 style="@style/TextViewSettings"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="38dp"
                 android:text="@string/write_to_support" />
 
             <Button
@@ -102,6 +108,8 @@
 
             <TextView
                 style="@style/TextViewSettings"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="38dp"
                 android:text="@string/user_agreement"/>
 
             <Button

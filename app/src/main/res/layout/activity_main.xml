@@ -26,18 +26,30 @@
 
         <Button
             style="@style/ButtonActivity"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
             android:id="@+id/buttonContainer"
             android:text="@string/search"
             app:icon="@drawable/ic_lupa" />
 
         <Button
             style="@style/ButtonActivity"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
             android:id="@+id/buttonContainer2"
             android:text="@string/media_library"
             app:icon="@drawable/ic_nota" />
 
         <Button
             style="@style/ButtonActivity"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
             android:id="@+id/buttonContainer3"
             android:text="@string/settings"
             app:icon="@drawable/ic_settings"/>
