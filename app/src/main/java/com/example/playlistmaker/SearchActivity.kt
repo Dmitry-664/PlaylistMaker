@@ -1,5 +1,6 @@
 package com.example.playlistmaker
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,10 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 class SearchActivity : AppCompatActivity() {
     companion object {
         private const val SEARCH_QUERY = "SEARCH_QUERY"
-    }
-    private lateinit var inputEditText: EditText
-    private var currentSearchQuery: String = ""
-    private val tracks = listOf(
+        private val tracks = listOf(
             Track(
                 "Smells Like Teen Spirit",
                 "Nirvana",
@@ -50,7 +48,11 @@ class SearchActivity : AppCompatActivity() {
                 "5:03",
                 "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/a0/4d/c4/a04dc484-03cc-02aa-fa82-5334fcb4bc16/18UMGIM24878.rgb.jpg/100x100bb.jpg"
             )
-    )
+        )
+    }
+
+    private lateinit var inputEditText: EditText
+    private var currentSearchQuery: String = ""
 
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -58,45 +60,47 @@ class SearchActivity : AppCompatActivity() {
         outState.putString(SEARCH_QUERY, currentSearchQuery)
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         if (savedInstanceState != null) {
             currentSearchQuery = savedInstanceState.getString(SEARCH_QUERY, "")
-            inputEditText.setText(currentSearchQuery)
+            inputEditText?.setText(currentSearchQuery)
         }
 
-        val trackRv = findViewById<RecyclerView>(R.id.track_recyclerView)
+        val trackRv = findViewById<RecyclerView>(R.id.rvTracks)
         trackRv.adapter = SearchAdapter(tracks)
 
         val backButton = findViewById<Button>(R.id.buttonBack)
-        backButton.setOnClickListener{
+        backButton.setOnClickListener {
             finish()
         }
 
         inputEditText = findViewById(R.id.inputEditText)
-        inputEditText.setOnClickListener{
+        inputEditText.setOnClickListener {
         }
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
         clearButton.visibility = View.INVISIBLE
-        clearButton.setOnClickListener{
-            inputEditText.text.clear()
+        clearButton.setOnClickListener {
+            inputEditText?.text?.clear()
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(inputEditText.windowToken, 0)
-            inputEditText.clearFocus()
+            inputMethodManager?.hideSoftInputFromWindow(inputEditText?.windowToken, 0)
+            inputEditText?.clearFocus()
         }
 
         val textWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int)=Unit
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
+                Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearButton.visibility = clearButtonVisibility(s)
                 currentSearchQuery = inputEditText.text.toString()
             }
 
-            override fun afterTextChanged(s: Editable?)=Unit
+            override fun afterTextChanged(s: Editable?) = Unit
         }
         inputEditText.addTextChangedListener(textWatcher)
     }

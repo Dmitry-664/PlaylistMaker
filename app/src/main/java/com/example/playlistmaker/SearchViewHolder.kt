@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
-class SearchViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val trackIconMusic = itemView.findViewById<ImageView>(R.id.icon_music)
     private val trackName = itemView.findViewById<TextView>(R.id.text_trackName)
     private val artistName = itemView.findViewById<TextView>(R.id.text_artistName)
