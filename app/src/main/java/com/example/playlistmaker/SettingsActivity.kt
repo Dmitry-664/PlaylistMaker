@@ -27,15 +27,15 @@ class SettingsActivity : AppCompatActivity() {
             applyTheme()
         }
         val shareButton = findViewById<Button>(R.id.buttonShare)
-        shareButton.setOnClickListener{
+        shareButton.setOnClickListener {
             shareApp()
         }
         val supportWrite = findViewById<Button>(R.id.writeToSupport)
-        supportWrite.setOnClickListener{
+        supportWrite.setOnClickListener {
             supportApp()
         }
         val agreementUser = findViewById<Button>(R.id.user_agreement)
-        agreementUser.setOnClickListener{
+        agreementUser.setOnClickListener {
             agreementApp()
         }
     }
@@ -47,6 +47,7 @@ class SettingsActivity : AppCompatActivity() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
+
     private fun shareApp() {
         Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
@@ -55,6 +56,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(Intent(this))
         }
     }
+
     @SuppressLint("QueryPermissionsNeeded")
     private fun supportApp() {
         val topic = getString(R.string.support_topic)
@@ -64,8 +66,9 @@ class SettingsActivity : AppCompatActivity() {
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email)))
         intent.putExtra(Intent.EXTRA_SUBJECT, topic)
         intent.putExtra(Intent.EXTRA_TEXT, message)
-            startActivity(intent)
+        startActivity(intent)
     }
+
     private fun agreementApp() {
         val url = getString(R.string.yandex_offer)
         val intent = Intent(Intent.ACTION_VIEW)
