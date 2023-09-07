@@ -59,6 +59,7 @@
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:saveEnabled="false"
+            android:singleLine="true"
             android:textColor="@color/black"
             android:textColorHint="@color/text_gray" />
 
@@ -76,6 +77,66 @@
             android:src="@drawable/search_close_ic"
             android:visibility="invisible" />
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/nothing_found_search_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_message_error"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/nothingFoundInternet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            style="@style/Error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/top_margin"
+            android:text="@string/nothing_found" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/no_connect_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_message_error"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/nothingFoundInternet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            style="@style/Error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/top_margin"
+            android:text="@string/no_connection_text" />
+
+        <Button
+            android:id="@+id/search_refresh"
+            style="@style/RefreshButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_top_refresh"
+            android:text="@string/refresh"
+            android:textAllCaps="false"
+            app:cornerRadius="@dimen/corner_radius_refresh" />
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTracks"
