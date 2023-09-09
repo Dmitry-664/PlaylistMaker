@@ -13,12 +13,12 @@ class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val trackIconMusic = itemView.findViewById<ImageView>(R.id.icon_music)
     private val trackName = itemView.findViewById<TextView>(R.id.text_trackName)
     private val artistName = itemView.findViewById<TextView>(R.id.text_artistName)
-    private val trackTime = itemView.findViewById<TextView>(R.id.track_lenght)
+    private val trackLenght = itemView.findViewById<TextView>(R.id.track_lenght)
 
     fun bind(item: Track) {
         trackName.text = item.trackName
         artistName.text = item.artistName
-        trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(293000L)
+        trackLenght.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMillis)
 
         Glide.with(itemView.context)
             .load(item.artworkUrl100)
