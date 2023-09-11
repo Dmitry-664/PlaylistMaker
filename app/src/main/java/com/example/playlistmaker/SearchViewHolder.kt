@@ -10,15 +10,14 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
     private val trackIconMusic = itemView.findViewById<ImageView>(R.id.icon_music)
     private val trackName = itemView.findViewById<TextView>(R.id.text_trackName)
-    private val artistName = itemView.findViewById<TextView>(R.id.text_artistName)
-    private val trackLenght = itemView.findViewById<TextView>(R.id.track_lenght)
+    private val artistName = itemView.findViewById<TextView>(R.id.text_subtitle)
 
     fun bind(item: Track) {
         trackName.text = item.trackName
-        artistName.text = item.artistName
-        trackLenght.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMillis)
+        artistName.text = "${item.artistName} • ${formatter.format(item.trackTimeMillis)}"
 
         Glide.with(itemView.context)
             .load(item.artworkUrl100)
@@ -26,5 +25,9 @@ class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .transform(RoundedCorners(5))
             .fitCenter()
             .into(trackIconMusic)
+    }
+
+    companion object {
+        private val formatter = SimpleDateFormat("mm:ss", Locale.getDefault())
     }
 }
