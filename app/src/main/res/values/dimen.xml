@@ -7,4 +7,9 @@
     <dimen name="button_w">48dp</dimen>
     <dimen name="button_h">48dp</dimen>
     <dimen name="end_margin">52dp</dimen>
+    <dimen name="text_size_error">19sp</dimen>
+    <dimen name="text_size_button_refresh">14sp</dimen>
+    <dimen name="margin_message_error">102dp</dimen>
+    <dimen name="margin_top_refresh">24dp</dimen>
+    <dimen name="corner_radius_refresh">54dp</dimen>
 </resources>

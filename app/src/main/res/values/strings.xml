@@ -13,4 +13,8 @@
     <string name="support_text">"Спасибо разработчикам и разработчицам за крутое приложение!"</string>
     <string name="yandex_offer">https://yandex.ru/legal/practicum_offer/</string>
     <string name="praktikum">https://practicum.yandex.ru</string>
+    <string name="something_went_wrong">Проблемы со связью</string>
+    <string name="nothing_found">Ничего не нашлось</string>
+    <string name="refresh">Обновить</string>
+    <string name="no_connection_text">Проблемы со связью\n\n Загрузка не удалась.Проверьте подключение к интернету</string>
 </resources>
