@@ -121,8 +121,8 @@
             style="@style/Error_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="@dimen/top_margin"
+            android:gravity="center"
             android:text="@string/no_connection_text" />
 
         <Button
@@ -137,12 +137,49 @@
             app:cornerRadius="@dimen/corner_radius_refresh" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/searchHistoryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="42dp"
+            android:text="@string/you_search"
+            android:textAppearance="@style/style_4" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTracksHistory"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="8"
+            tools:listitem="@layout/item_search_layout" />
+
+        <Button
+            android:id="@+id/clearHistoryButton"
+            style="@style/HistorySearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:text="@string/clear_history"
+            android:textAllCaps="false"
+            app:cornerRadius="@dimen/corner_radius_refresh" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTracks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_search_layout" />
 
 </LinearLayout>

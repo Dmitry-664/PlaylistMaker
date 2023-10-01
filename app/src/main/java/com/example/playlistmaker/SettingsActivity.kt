@@ -6,13 +6,14 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
-import com.example.playlistmaker.R
+import androidx.appcompat.app.AppCompatDelegate
+
+
+const val THEME_SHARED_PREFERENCES = "theme_mode"
+const val KEY_STATUS_SHARED_PREFERENCES = "status_shared_preferences"
 
 class SettingsActivity : AppCompatActivity() {
-    private var isDarkThemeEnabled = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -21,10 +22,15 @@ class SettingsActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
-        val switchButton = findViewById<SwitchCompat>(R.id.switchButton)
-        switchButton.setOnCheckedChangeListener { _, isChecked ->
-            isDarkThemeEnabled = isChecked
-            applyTheme()
+
+        val themeSwitcher = findViewById<SwitchCompat>(R.id.switchButton)
+        themeSwitcher.isChecked = (applicationContext as ThemeModeNight).darkTheme
+        themeSwitcher.setOnCheckedChangeListener { _, isChecked ->
+            (applicationContext as ThemeModeNight).switchTheme(isChecked)
+            val sharedPrefs = getSharedPreferences(THEME_SHARED_PREFERENCES, MODE_PRIVATE)
+            sharedPrefs.edit()
+                .putBoolean(KEY_STATUS_SHARED_PREFERENCES, isChecked)
+                .apply()
         }
         val shareButton = findViewById<Button>(R.id.buttonShare)
         shareButton.setOnClickListener {
@@ -40,13 +46,6 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun applyTheme() {
-        if (isDarkThemeEnabled) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-    }
 
     private fun shareApp() {
         Intent(Intent.ACTION_SEND).apply {
