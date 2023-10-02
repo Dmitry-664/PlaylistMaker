@@ -8,14 +8,14 @@ const val SIZE_TRACK = 10
 class SearchHistory(sharedPreferences: SharedPreferences) {
     private val sharedPrefs = sharedPreferences
 
-    fun read(): List<Track> {
+    fun readListTrack(): List<Track> {
         val json = sharedPrefs.getString(SHARED_PREF_KEY, null) ?: return emptyList()
         return Gson().fromJson(json, Array<Track>::class.java).toList()
     }
     fun clear() = sharedPrefs.edit().clear().apply()
 
     fun add(newTrack: Track){
-        var sizeList = read().toMutableList()
+        var sizeList = readListTrack().toMutableList()
         sizeList.removeIf { it.trackId == newTrack.trackId }
         sizeList.add(0, newTrack)
         if (sizeList.size > SIZE_TRACK) {

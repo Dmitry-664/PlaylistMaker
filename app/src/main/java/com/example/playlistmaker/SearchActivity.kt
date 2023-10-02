@@ -27,6 +27,7 @@ class SearchActivity : AppCompatActivity() {
     companion object {
         private const val SEARCH_QUERY = "SEARCH_QUERY"
         const val PREF_NAME = "pref_name"
+        const val ITEMS_TO_UPDATE = 10
     }
 
     private lateinit var inputEditText: EditText
@@ -81,7 +82,7 @@ class SearchActivity : AppCompatActivity() {
         searchAdapter = SearchAdapter(searchHistoryList) { searchHistoryList ->
             searchHistory.add(searchHistoryList)
             readHistory()
-            searchAdapter.notifyItemRangeChanged(0, 10)
+            searchAdapter.notifyItemRangeChanged(0, ITEMS_TO_UPDATE)
         }
         rvTrackHistory.adapter = searchAdapter
         readHistory()
@@ -103,10 +104,8 @@ class SearchActivity : AppCompatActivity() {
                         ) {
                             if (response.code() == 200) {
                                 trackList.clear()
-                                val newTracks = response.body()?.results ?: emptyList()
-                                adapter.setTracks(newTracks.toMutableList())
-                                if (newTracks.isEmpty()) {
-                                    nothingFoundSearch.visibility = View.VISIBLE
+                                if (response.body()?.results?.isNotEmpty() == true) {
+                                    trackList.addAll(response.body()?.results!!)
                                 } else {
                                     trackList.clear()
                                     nothingFoundSearch.visibility = View.VISIBLE
@@ -115,7 +114,7 @@ class SearchActivity : AppCompatActivity() {
                                 trackList.clear()
                                 noConnectSearch.visibility = View.VISIBLE
                             }
-//                            adapter.notifyDataSetChanged()
+                            adapter.notifyDataSetChanged()
                         }
 
                         override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
@@ -130,8 +129,6 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
-//        inputEditText.setOnClickListener {
-//        }
 
         clearButton.visibility = View.INVISIBLE
         clearButton.setOnClickListener {
@@ -201,7 +198,7 @@ class SearchActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     fun readHistory() {
         searchHistoryList.clear()
-        searchHistoryList.addAll(searchHistory.read())
+        searchHistoryList.addAll(searchHistory.readListTrack())
         searchAdapter.notifyItemRangeChanged(0, searchHistoryList.size)
         Log.e("myLog", "readHistory + $searchHistoryList")
     }
