@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="origin">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
+
     <style name="style_1">
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">#1A1B22</item>
     </style>
+
     <style name="style_2">
         <item name="android:textSize">26sp</item>
         <item name="android:textColor">#ffffff</item>
     </style>
+
     <style name="style_3">
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
+
+    <style name="style_4">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
     <style name="ButtonActivity" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
@@ -31,6 +41,7 @@
         <item name="iconPadding">8dp</item>
         <item name="iconTint">@color/black</item>
     </style>
+
     <style name="ButtonSettings" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -42,10 +53,12 @@
         <item name="iconGravity">end</item>
         <item name="iconTint">@color/white</item>
     </style>
+
     <style name="SwitchButtonSettings" parent="Widget.MaterialComponents.Button">
         <item name="android:thumb">@drawable/knob_switch_nigth</item>
         <item name="android:track">@drawable/track_switch_nigth</item>
     </style>
+
     <style name="TextViewSettings" parent="origin">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -56,35 +69,50 @@
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
     </style>
+
     <style name="MyBackGroudActivity">
         <item name="android:background">@color/black1</item>
     </style>
+
     <style name="MyBackGroudSettings">
         <item name="android:background">@color/black1</item>
     </style>
+
     <style name="MyBackGroundSearch">
         <item name="android:background">@color/black1</item>
     </style>
+
     <style name="ButtonSearchTrack" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="iconTint">@color/white</item>
     </style>
+
     <style name="ClearIconSearch">
         <item name="iconTint">@color/black1</item>
     </style>
+
     <style name="nothingFoundInternet">
         <item name="android:src">@drawable/dark_mode_nothing_found</item>
     </style>
+
     <style name="noConnectInternet">
         <item name="android:src">@drawable/dark_mode_no_connect</item>
     </style>
+
     <style name="Error_text">
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textSize">@dimen/text_size_error</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="RefreshButton">
         <item name="android:backgroundTint">@color/white</item>
         <item name="android:textColor">@color/black1</item>
         <item name="android:textSize">@dimen/text_size_button_refresh</item>
+    </style>
+
+    <style name="HistorySearch">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/black1</item>
+        <item name="android:textSize">@dimen/text_size_history_search</item>
     </style>
 </resources>
