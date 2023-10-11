@@ -1,11 +1,15 @@
 package com.example.playlistmaker
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import java.util.ArrayList
+
+const val SOMETHING_KEY_TRACK = "something_key_track"
 
 class SearchAdapter(
     private var trackList: MutableList<Track>,
@@ -23,11 +27,18 @@ class SearchAdapter(
         holder.setIsRecyclable(true)
         holder.itemView.setOnClickListener {
             itemClickListener.invoke(trackList[position])
+            openAudioPlayer(holder, trackList[position])
             Log.e("myLog", "Track push $position")
         }
     }
 
     override fun getItemCount(): Int {
         return trackList.size
+    }
+
+    private fun openAudioPlayer(holder: SearchViewHolder, track: Track) {
+        val intent = Intent(holder.itemView.context, AudioPlayerActivity::class.java)
+        intent.putExtra(SOMETHING_KEY_TRACK, Gson().toJson(track))
+        holder.itemView.context.startActivity(intent)
     }
 }

@@ -20,7 +20,7 @@
             android:layout_width="@dimen/button_w"
             android:layout_height="@dimen/button_h"
             android:layout_gravity="center"
-            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:background="@android:color/transparent"
             app:icon="@drawable/ic_back"
             app:iconGravity="textStart" />
