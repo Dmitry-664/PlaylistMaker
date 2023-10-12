@@ -45,8 +45,8 @@ class AudioPlayerViewHolder(private val audioPlayerViewHolder: AudioPlayerActivi
         Glide.with(audioPlayerViewHolder)
             .load(item.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"))
             .placeholder(R.drawable.ic_placeholder_player)
-            .transform(RoundedCorners(10))
             .fitCenter()
+            .transform(RoundedCorners(15))
             .into(trackImage)
 
     }

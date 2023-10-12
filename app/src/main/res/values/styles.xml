@@ -97,7 +97,6 @@
     </style>
 
     <style name="MyBackGroundPlayTrack">
-        <item name="android:iconTint">@color/black1</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
 

@@ -18,7 +18,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_audio_player)
 
         playerTime = findViewById(R.id.timeSongAudioPlayer)
-        val backButton: ImageButton = findViewById(R.id.buttonBackAudioPlayer)
+        val backButton: Button = findViewById(R.id.buttonBackAudioPlayer)
         val addToPlayList: ImageView = findViewById(R.id.addSongAudioPlayer)
         val playPause: ImageView = findViewById(R.id.playAudioPlayer)
         val likeButton: ImageView = findViewById(R.id.liveSongAudioPlayer)

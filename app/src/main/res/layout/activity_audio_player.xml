@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/MyBackGroundSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".AudioPlayerActivity">
 
-        <ImageButton
+        <Button
             android:id="@+id/buttonBackAudioPlayer"
             style="@style/ButtonSettings"
             android:layout_width="48dp"
@@ -23,7 +22,7 @@
             android:background="@android:color/transparent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_back" />
+            app:icon="@drawable/ic_back" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/leftBorder"
@@ -47,6 +46,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@id/rightBorder"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@id/leftBorder"
             app:layout_constraintTop_toBottomOf="@id/buttonBackAudioPlayer"
             tools:src="@drawable/ic_placeholder_player" />
@@ -75,6 +75,7 @@
 
         <ImageView
             android:id="@+id/addSongAudioPlayer"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="54dp"
@@ -83,9 +84,9 @@
             app:layout_constraintTop_toBottomOf="@id/nameGroupAudioPlayer"
             app:srcCompat="@drawable/ic_add_song" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/playAudioPlayer"
-            style="@style/MyBackGroundPlayTrack"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -96,10 +97,10 @@
 
         <ImageView
             android:id="@+id/liveSongAudioPlayer"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="54dp"
-            style="@style/MyBackGroundLiveTrack"
             app:layout_constraintEnd_toStartOf="@id/rightBorder"
             app:layout_constraintTop_toBottomOf="@id/nameGroupAudioPlayer"
             app:srcCompat="@drawable/ic_live_song" />
@@ -126,7 +127,7 @@
             android:layout_marginStart="16dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:text="Длительность"
+            android:text="@string/trackTimes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/barrierAudioPlayer"
             app:layout_constraintVertical_chainStyle="spread_inside" />
@@ -153,7 +154,7 @@
             android:layout_marginStart="16dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:text="Альбом"
+            android:text="@string/album"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/trackTimesAudio" />
 
@@ -178,7 +179,7 @@
             android:layout_marginStart="16dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:text="Год"
+            android:text="@string/year"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/albumNameAudio" />
 
@@ -203,7 +204,7 @@
             android:layout_marginStart="16dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:text="Жанр"
+            android:text="@string/genre"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/trackYearAudio" />
 
@@ -227,8 +228,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:text="Страна"
+            android:paddingBottom="16dp"
+            android:text="@string/country"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/trackGenreAudio" />
 
@@ -239,7 +240,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+            android:paddingBottom="16dp"
             app:layout_constraintBaseline_toBaselineOf="@id/trackCountryAudio"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/trackGenreAudioInfo"
