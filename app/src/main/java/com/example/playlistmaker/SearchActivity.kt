@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -15,7 +17,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,6 +49,10 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var sharedPreferencesHistory: SharedPreferences
     private var searchHistoryList: MutableList<Track> = mutableListOf()
     private lateinit var searchHistory: SearchHistory
+    private lateinit var nothingFoundSearch: LinearLayout
+    private lateinit var noConnectSearch: LinearLayout
+//    private val searchRunnable = Runnable { sendSearch() }
+//    private lateinit var progressBar: ProgressBar
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -63,18 +69,20 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+
         searchHistoryLayout = findViewById(R.id.searchHistoryLayout)
         rvTrackHistory = findViewById(R.id.rvTracksHistory)
         trackRv = findViewById(R.id.rvTracks)
         inputEditText = findViewById(R.id.inputEditText)
-        val nothingFoundSearch = findViewById<LinearLayout>(R.id.nothing_found_search_layout)
-        val noConnectSearch = findViewById<LinearLayout>(R.id.no_connect_layout)
+        nothingFoundSearch = findViewById(R.id.nothing_found_search_layout)
+        noConnectSearch = findViewById(R.id.no_connect_layout)
         val searchRefreshButton = findViewById<Button>(R.id.search_refresh)
         val clearHistoryButton = findViewById<Button>(R.id.clearHistoryButton)
         val backButton = findViewById<Button>(R.id.buttonBack)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
         sharedPreferencesHistory = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
         searchHistory = SearchHistory(sharedPreferencesHistory)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         adapter = SearchAdapter(trackList) { trackList ->
             searchHistory.add(trackList)
         }
@@ -88,12 +96,17 @@ class SearchActivity : AppCompatActivity() {
         readHistory()
         historyVisible()
 
+        backButton.setOnClickListener {
+            finish()
+        }
+
         fun sendSearch() {
-            trackRv.visibility = View.VISIBLE
-            nothingFoundSearch.visibility = View.GONE
-            noConnectSearch.visibility = View.GONE
-            searchHistoryLayout.visibility = View.GONE
             if (inputEditText.text?.isNotEmpty() == true) {
+                progressBar.visibility = View.VISIBLE
+                trackRv.visibility = View.GONE
+                nothingFoundSearch.visibility = View.GONE
+                noConnectSearch.visibility = View.GONE
+                searchHistoryLayout.visibility = View.GONE
                 iTunesService.search(inputEditText.text.toString())
                     .enqueue(object : Callback<SearchResponse> {
 
@@ -102,6 +115,8 @@ class SearchActivity : AppCompatActivity() {
                             call: Call<SearchResponse>,
                             response: Response<SearchResponse>
                         ) {
+                        progressBar.visibility = View.GONE
+                            trackRv.visibility = View.VISIBLE
                             if (response.code() == 200) {
                                 trackList.clear()
                                 if (response.body()?.results?.isNotEmpty() == true) {
@@ -118,17 +133,14 @@ class SearchActivity : AppCompatActivity() {
                         }
 
                         override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+                            progressBar.visibility = View.GONE
                             trackList.clear()
                             noConnectSearch.visibility = View.VISIBLE
                         }
                     })
             }
         }
-
-        backButton.setOnClickListener {
-            finish()
-        }
-
+        val searchRunnable = Runnable { sendSearch() }
 
         clearButton.visibility = View.INVISIBLE
         clearButton.setOnClickListener {
@@ -151,6 +163,7 @@ class SearchActivity : AppCompatActivity() {
                 clearButton.visibility = clearButtonVisibility(s)
                 currentSearchQuery = inputEditText.text.toString()
                 searchHistoryLayout.visibility = searchHistoryVisibility(s)
+                DebounceActivity.searchDebounce(searchRunnable)
             }
 
             override fun afterTextChanged(s: Editable?) = Unit
