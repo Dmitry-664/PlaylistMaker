@@ -4,10 +4,9 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.DebounceActivity.clickDebounce
 import com.google.gson.Gson
-import java.util.ArrayList
 
 const val SOMETHING_KEY_TRACK = "something_key_track"
 
@@ -37,8 +36,11 @@ class SearchAdapter(
     }
 
     private fun openAudioPlayer(holder: SearchViewHolder, track: Track) {
-        val intent = Intent(holder.itemView.context, AudioPlayerActivity::class.java)
-        intent.putExtra(SOMETHING_KEY_TRACK, Gson().toJson(track))
-        holder.itemView.context.startActivity(intent)
+        if (clickDebounce()) {
+            val intent = Intent(holder.itemView.context, AudioPlayerActivity::class.java)
+            intent.putExtra(SOMETHING_KEY_TRACK, Gson().toJson(track))
+            holder.itemView.context.startActivity(intent)
+        }
+
     }
 }

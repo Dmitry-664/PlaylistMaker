@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 
-const val TIME_SONG_PLAYER = "00:01"
+const val TIME_SONG_PLAYER = "00:00"
 class AudioPlayerViewHolder(private val audioPlayerViewHolder: AudioPlayerActivity) {
     private val trackImage = audioPlayerViewHolder.findViewById<ImageView>(R.id.imageAudioPlayer)
     private val nameSong = audioPlayerViewHolder.findViewById<TextView>(R.id.nameSongAudioPlayer)
@@ -43,7 +43,7 @@ class AudioPlayerViewHolder(private val audioPlayerViewHolder: AudioPlayerActivi
 
 
         Glide.with(audioPlayerViewHolder)
-            .load(item.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"))
+            .load(item.artworkUrl100?.replaceAfterLast('/',"512x512bb.jpg"))
             .placeholder(R.drawable.ic_placeholder_player)
             .fitCenter()
             .transform(RoundedCorners(15))
