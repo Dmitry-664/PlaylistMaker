@@ -11,12 +11,12 @@ object DebounceActivity {
     private val handler = Handler(Looper.getMainLooper())
 
     fun clickDebounce(): Boolean {
-        val current = isClickAllowed
+        val click = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
             handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
         }
-        return current
+        return click
     }
 
     fun searchDebounce(searchRunnable: Runnable) {

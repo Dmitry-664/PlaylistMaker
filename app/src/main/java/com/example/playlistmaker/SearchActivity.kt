@@ -18,6 +18,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -102,11 +103,11 @@ class SearchActivity : AppCompatActivity() {
 
         fun sendSearch() {
             if (inputEditText.text?.isNotEmpty() == true) {
-                progressBar.visibility = View.VISIBLE
-                trackRv.visibility = View.GONE
-                nothingFoundSearch.visibility = View.GONE
-                noConnectSearch.visibility = View.GONE
-                searchHistoryLayout.visibility = View.GONE
+                progressBar.isVisible = true
+                trackRv.isVisible = false
+                nothingFoundSearch.isVisible = false
+                noConnectSearch.isVisible = false
+                searchHistoryLayout.isVisible = false
                 iTunesService.search(inputEditText.text.toString())
                     .enqueue(object : Callback<SearchResponse> {
 
@@ -115,27 +116,27 @@ class SearchActivity : AppCompatActivity() {
                             call: Call<SearchResponse>,
                             response: Response<SearchResponse>
                         ) {
-                        progressBar.visibility = View.GONE
-                            trackRv.visibility = View.VISIBLE
+                        progressBar.isVisible = false
+                            trackRv.isVisible = true
                             if (response.code() == 200) {
                                 trackList.clear()
                                 if (response.body()?.results?.isNotEmpty() == true) {
                                     trackList.addAll(response.body()?.results!!)
                                 } else {
                                     trackList.clear()
-                                    nothingFoundSearch.visibility = View.VISIBLE
+                                    nothingFoundSearch.isVisible = true
                                 }
                             } else {
                                 trackList.clear()
-                                noConnectSearch.visibility = View.VISIBLE
+                                noConnectSearch.isVisible = true
                             }
                             adapter.notifyDataSetChanged()
                         }
 
                         override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-                            progressBar.visibility = View.GONE
+                            progressBar.isVisible = false
                             trackList.clear()
-                            noConnectSearch.visibility = View.VISIBLE
+                            noConnectSearch.isVisible = true
                         }
                     })
             }
@@ -152,7 +153,7 @@ class SearchActivity : AppCompatActivity() {
             searchAdapter.notifyDataSetChanged()
             inputEditText.clearFocus()
             historyVisible()
-            trackRv.visibility = View.GONE
+            trackRv.isVisible = false
         }
 
         val textWatcher = object : TextWatcher {
@@ -172,9 +173,9 @@ class SearchActivity : AppCompatActivity() {
 
         inputEditText.setOnFocusChangeListener { _, hasFocus ->
             readHistory()
-            trackRv.visibility = View.GONE
+            trackRv.isVisible = false
             if (searchHistoryList.isNotEmpty() && hasFocus && inputEditText.text.isNullOrEmpty()) {
-                searchHistoryLayout.visibility = View.VISIBLE
+                searchHistoryLayout.isVisible = true
             } else View.GONE
         }
 
@@ -196,7 +197,7 @@ class SearchActivity : AppCompatActivity() {
             searchHistory.clear()
             searchHistoryList.clear()
             searchAdapter.notifyItemRangeChanged(0, searchHistoryList.size)
-            searchHistoryLayout.visibility = View.GONE
+            searchHistoryLayout.isVisible = false
         }
     }
 
@@ -218,7 +219,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun historyVisible() {
         if (searchHistoryList.isNotEmpty()) {
-            searchHistoryLayout.visibility = View.VISIBLE
+            searchHistoryLayout.isVisible = true
         } else View.GONE
     }
 

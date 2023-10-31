@@ -14,21 +14,21 @@ import com.google.gson.Gson
 import java.util.Locale
 
 class AudioPlayerActivity : AppCompatActivity() {
-    companion object {
-        private const val STATE_DEFAULT = 0
-        private const val STATE_PREPARED = 1
-        private const val STATE_PLAYING = 2
-        private const val STATE_PAUSED = 3
+    enum class State {
+        DEFAULT,
+        PREPARED,
+        PLAYING,
+        PAUSED
     }
 
-    private lateinit var playerTime: TextView
+    private var playerTime: TextView? = null
     private lateinit var track: Track
     private var audioPlayerViewHolder: AudioPlayerViewHolder? = null
-    private var playerState = STATE_DEFAULT
-    private lateinit var mediaUri: Uri
+    private var playerState = State.DEFAULT
+    private var mediaUri: Uri? = null
     private var mediaPlayer: MediaPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
-    private lateinit var playAudioPlayer: ImageView
+    private var playAudioPlayer: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,13 +68,6 @@ class AudioPlayerActivity : AppCompatActivity() {
         pausePlayer()
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        playAudioPlayer?.setOnClickListener {
-//            playbackControl()
-//            handler.post(conditionTime)
-//        }
-//    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -88,11 +81,11 @@ class AudioPlayerActivity : AppCompatActivity() {
         mediaPlayer?.prepareAsync()
         mediaPlayer?.setOnPreparedListener{
             playAudioPlayer?.isEnabled = true
-            playerState = STATE_PREPARED
+            playerState = State.PREPARED
         }
         mediaPlayer?.setOnCompletionListener {
             playAudioPlayer
-            playerState = STATE_PREPARED
+            playerState = State.PREPARED
             playerTime?.text = getString(R.string.zero_time)
             handler.removeCallbacks(conditionTime())
         }
@@ -101,27 +94,29 @@ class AudioPlayerActivity : AppCompatActivity() {
     private fun startPlayer() {
         mediaPlayer?.start()
         playAudioPlayer?.setImageResource(R.drawable.ic_play_audio_player_checked)
-        playerState = STATE_PLAYING
+        playerState = State.PLAYING
     }
 
     private fun pausePlayer() {
         mediaPlayer?.pause()
         playAudioPlayer?.setImageResource(R.drawable.ic_play_audio_player)
-        playerState = STATE_PAUSED
+        playerState = State.PAUSED
     }
 
     private fun playbackControl() {
         when(playerState) {
-            STATE_PLAYING -> {
+            State.PLAYING -> {
                 pausePlayer()
                 playAudioPlayer?.setImageResource(R.drawable.ic_play_audio_player)
                 handler.removeCallbacks(conditionTime())
             }
-            STATE_PREPARED, STATE_PAUSED -> {
+            State.PREPARED, State.PAUSED -> {
                 startPlayer()
                 playAudioPlayer?.setImageResource(R.drawable.ic_play_audio_player_checked)
                 handler.post(conditionTime())
             }
+
+            else -> Unit
         }
     }
 
