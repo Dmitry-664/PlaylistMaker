@@ -20,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.Data.dto.SearchResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,8 +53,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchHistory: SearchHistory
     private lateinit var nothingFoundSearch: LinearLayout
     private lateinit var noConnectSearch: LinearLayout
-//    private val searchRunnable = Runnable { sendSearch() }
-//    private lateinit var progressBar: ProgressBar
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
