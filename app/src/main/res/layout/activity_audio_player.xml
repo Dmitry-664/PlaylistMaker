@@ -9,7 +9,7 @@
         style="@style/MyBackGroundSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AudioPlayerActivity">
+        tools:context=".presentation.AudioPlayerActivity">
 
         <Button
             android:id="@+id/buttonBackAudioPlayer"

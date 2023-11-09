@@ -2,11 +2,8 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -20,37 +17,27 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.Data.dto.SearchResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.playlistmaker.domain.api.SearchHistoryInteractor
+import com.example.playlistmaker.domain.api.TrackInteractor
+import com.example.playlistmaker.domain.models.Track
 
 class SearchActivity : AppCompatActivity() {
     companion object {
         private const val SEARCH_QUERY = "SEARCH_QUERY"
-        const val PREF_NAME = "pref_name"
         const val ITEMS_TO_UPDATE = 10
     }
 
     private lateinit var inputEditText: EditText
     private var currentSearchQuery: String = ""
     private lateinit var trackRv: RecyclerView
-    private val iTunesBaseUrl = "https://itunes.apple.com"
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(iTunesBaseUrl)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    private val iTunesService = retrofit.create(ITunesApi::class.java)
+    private val trackInteractor = Creator.provideTrackInteractor()
     private var trackList: MutableList<Track> = mutableListOf()
     private lateinit var adapter: SearchAdapter
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var rvTrackHistory: RecyclerView
     private lateinit var searchHistoryLayout: LinearLayout
-    private lateinit var sharedPreferencesHistory: SharedPreferences
+    private lateinit var searchHistoryInteractor: SearchHistoryInteractor
     private var searchHistoryList: MutableList<Track> = mutableListOf()
-    private lateinit var searchHistory: SearchHistory
     private lateinit var nothingFoundSearch: LinearLayout
     private lateinit var noConnectSearch: LinearLayout
 
@@ -65,12 +52,12 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setText(savedInstanceState.getString(SEARCH_QUERY))
     }
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-
+        searchHistoryInteractor = Creator.provideSharedPrefRepositoryInteractor(applicationContext)
         searchHistoryLayout = findViewById(R.id.searchHistoryLayout)
         rvTrackHistory = findViewById(R.id.rvTracksHistory)
         trackRv = findViewById(R.id.rvTracks)
@@ -81,15 +68,15 @@ class SearchActivity : AppCompatActivity() {
         val clearHistoryButton = findViewById<Button>(R.id.clearHistoryButton)
         val backButton = findViewById<Button>(R.id.buttonBack)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
-        sharedPreferencesHistory = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
-        searchHistory = SearchHistory(sharedPreferencesHistory)
+//        sharedPreferencesHistory = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+//        searchHistory = SearchHistory(sharedPreferencesHistory)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        adapter = SearchAdapter(trackList) { trackList ->
-            searchHistory.add(trackList)
+        adapter = SearchAdapter(trackList) { track ->
+            searchHistoryInteractor.addTrack(track)
         }
         trackRv.adapter = adapter
-        searchAdapter = SearchAdapter(searchHistoryList) { searchHistoryList ->
-            searchHistory.add(searchHistoryList)
+        searchAdapter = SearchAdapter(searchHistoryList) { searchTrack ->
+            searchHistoryInteractor.addTrack(searchTrack)
             readHistory()
             searchAdapter.notifyItemRangeChanged(0, ITEMS_TO_UPDATE)
         }
@@ -108,38 +95,30 @@ class SearchActivity : AppCompatActivity() {
                 nothingFoundSearch.isVisible = false
                 noConnectSearch.isVisible = false
                 searchHistoryLayout.isVisible = false
-                iTunesService.search(inputEditText.text.toString())
-                    .enqueue(object : Callback<SearchResponse> {
-
-                        @SuppressLint("NotifyDataSetChanged")
-                        override fun onResponse(
-                            call: Call<SearchResponse>,
-                            response: Response<SearchResponse>
-                        ) {
-                        progressBar.isVisible = false
+                trackInteractor.searchTracks(inputEditText.text.toString(), object : TrackInteractor.TracksConsumer{
+                    @SuppressLint("NotifyDataSetChanged")
+                    override fun consume(foundTracks: List<Track>) {
+                        try{
+                            progressBar.isVisible = false
                             trackRv.isVisible = true
-                            if (response.code() == 200) {
-                                trackList.clear()
-                                if (response.body()?.results?.isNotEmpty() == true) {
-                                    trackList.addAll(response.body()?.results!!)
-                                } else {
-                                    trackList.clear()
-                                    nothingFoundSearch.isVisible = true
-                                }
+                            trackList.clear()
+                            if (foundTracks.isNotEmpty()) {
+                                trackList.addAll(foundTracks)
                             } else {
-                                trackList.clear()
-                                noConnectSearch.isVisible = true
+                                nothingFoundSearch.isVisible = true
                             }
                             adapter.notifyDataSetChanged()
-                        }
-
-                        override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+                        } catch (exception: Exception) {
                             progressBar.isVisible = false
                             trackList.clear()
                             noConnectSearch.isVisible = true
                         }
-                    })
+
+                    }
+
+                })
             }
+            //val searchRunnable = Runnable { sendSearch() }
         }
         val searchRunnable = Runnable { sendSearch() }
 
@@ -194,7 +173,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         clearHistoryButton.setOnClickListener {
-            searchHistory.clear()
+            searchHistoryInteractor.clear()
             searchHistoryList.clear()
             searchAdapter.notifyItemRangeChanged(0, searchHistoryList.size)
             searchHistoryLayout.isVisible = false
@@ -212,7 +191,7 @@ class SearchActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     fun readHistory() {
         searchHistoryList.clear()
-        searchHistoryList.addAll(searchHistory.readListTrack())
+        searchHistoryList.addAll(searchHistoryInteractor.readListTrack())
         searchAdapter.notifyItemRangeChanged(0, searchHistoryList.size)
         Log.e("myLog", "readHistory + $searchHistoryList")
     }
