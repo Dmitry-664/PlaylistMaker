@@ -1,4 +1,4 @@
-package com.example.playlistmaker.presentation
+package com.example.playlistmaker.presentation.viewHolder
 
 import android.icu.text.SimpleDateFormat
 import android.widget.ImageView
@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.presentation.AudioPlayerActivity
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
