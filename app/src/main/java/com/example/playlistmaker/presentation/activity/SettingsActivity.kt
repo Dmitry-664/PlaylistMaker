@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.presentation.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,7 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.widget.SwitchCompat
-import androidx.appcompat.app.AppCompatDelegate
+import com.example.playlistmaker.R
+import com.example.playlistmaker.ThemeModeNight
 
 
 const val THEME_SHARED_PREFERENCES = "theme_mode"

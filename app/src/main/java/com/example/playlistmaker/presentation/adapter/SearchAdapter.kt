@@ -1,11 +1,15 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.presentation.adapter
 
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.DebounceActivity.clickDebounce
+import com.example.playlistmaker.presentation.activity.DebounceActivity.clickDebounce
+import com.example.playlistmaker.R
+import com.example.playlistmaker.presentation.viewHolder.SearchViewHolder
+import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.presentation.AudioPlayerActivity
 import com.google.gson.Gson
 
 const val SOMETHING_KEY_TRACK = "something_key_track"

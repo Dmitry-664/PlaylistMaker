@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.presentation
 
 import android.icu.text.SimpleDateFormat
 import android.media.MediaPlayer
@@ -10,6 +10,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.playlistmaker.R
+import com.example.playlistmaker.presentation.adapter.SOMETHING_KEY_TRACK
+import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.presentation.viewHolder.AudioPlayerViewHolder
 import com.google.gson.Gson
 import java.util.Locale
 

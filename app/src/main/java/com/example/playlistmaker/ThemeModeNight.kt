@@ -2,6 +2,8 @@ package com.example.playlistmaker
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.playlistmaker.presentation.activity.KEY_STATUS_SHARED_PREFERENCES
+import com.example.playlistmaker.presentation.activity.THEME_SHARED_PREFERENCES
 
 class ThemeModeNight : Application() {
     var darkTheme: Boolean = false
