@@ -22,14 +22,10 @@ import java.util.Locale
 
 class AudioPlayerActivity : ComponentActivity() {
 
-    private var playerTime: TextView? = null
+    private lateinit var playerTime: TextView
     private lateinit var track: Track
-    private var audioPlayerViewHolder: AudioPlayerViewHolder? = null
-//    private var playerState = State.DEFAULT
-//    private var mediaUri: Uri? = null
-//    private var mediaPlayer: MediaPlayer? = null
-//    private val handler = Handler(Looper.getMainLooper())
-    private var playAudioPlayer: ImageView? = null
+    private lateinit var audioPlayerViewHolder: AudioPlayerViewHolder
+    private lateinit var playAudioPlayer: ImageView
     private val viewModel by viewModels<AudioPlayerViewModel> {
         AudioPlayerViewModel.getViewModelFactory()
     }
