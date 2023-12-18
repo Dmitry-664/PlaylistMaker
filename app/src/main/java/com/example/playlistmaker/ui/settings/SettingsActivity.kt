@@ -1,14 +1,12 @@
 package com.example.playlistmaker.ui.settings
 
 
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SwitchCompat
 import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.models.ThemeModeNight
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -51,13 +49,4 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 }
-//        val isDeviceDarkMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-//        ThemeModeNight.switchTheme(isDeviceDarkMode)
 
-//        themeSwitcher.isChecked = (applicationContext as ThemeModeNight).darkTheme
-//            (applicationContext as ThemeModeNight).switchTheme(isChecked)
-//            val sharedPrefs = getSharedPreferences(THEME_SHARED_PREFERENCES, MODE_PRIVATE)
-//            sharedPrefs.edit()
-//                .putBoolean(KEY_STATUS_SHARED_PREFERENCES, isChecked)
-//                .apply()
-//

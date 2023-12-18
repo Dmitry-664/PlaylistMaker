@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.playlistmaker.domain.models.ThemeModeNight
+import com.example.playlistmaker.App.ThemeModeNight
 import com.example.playlistmaker.domain.settings.api.AppTheme
 import com.example.playlistmaker.domain.settings.api.SettingsInteractor
 import com.example.playlistmaker.domain.settings.api.SharingInteractor

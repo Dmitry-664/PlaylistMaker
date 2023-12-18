@@ -1,7 +1,6 @@
-package com.example.playlistmaker.domain.models
+package com.example.playlistmaker.App
 
 import androidx.appcompat.app.AppCompatDelegate
-
 
 object ThemeModeNight {
     fun switchTheme(darkTheme: Boolean) {
