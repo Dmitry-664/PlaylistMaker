@@ -50,12 +50,14 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(SEARCH_QUERY, currentSearchQuery)
+        outState.putString(SEARCH_QUERY, inputEditText.text.toString())
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        inputEditText.setText(savedInstanceState.getString(SEARCH_QUERY))
+        val lastSearchQuery = savedInstanceState.getString(SEARCH_QUERY) ?: ""
+        viewModel.sendSearch(lastSearchQuery)
+        inputEditText.setText(lastSearchQuery)
     }
 
     @SuppressLint("MissingInflatedId", "NotifyDataSetChanged")
@@ -103,7 +105,7 @@ class SearchActivity : AppCompatActivity() {
                 Unit
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                clearButton.isVisible = p0.isNullOrEmpty()
+                clearButton.visibility = clearButtonVisibility(p0)
                 currentSearchQuery = inputEditText.text.toString()
                 val queryNew = p0?.toString().orEmpty()
                 currentSearchQuery = queryNew
@@ -232,4 +234,11 @@ class SearchActivity : AppCompatActivity() {
         searchHistoryLayout.isVisible = false
     }
 
+    private fun clearButtonVisibility(s: CharSequence?): Int {
+        return if (s.isNullOrEmpty()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+    }
 }
