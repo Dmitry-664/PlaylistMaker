@@ -17,7 +17,7 @@ import com.example.playlistmaker.domain.search.api.SearchInteractor
 import com.example.playlistmaker.util.Creator
 
 
-interface SearchContract {
+interface SearchViewModel {
     val stateHistory: LiveData<List<Track>>
     val stateSearch: LiveData<ViewState>
 
@@ -27,10 +27,10 @@ interface SearchContract {
     fun addTrackToHistory(track: Track)
     fun clearSearchHistory()
 }
-class SearchViewModel(
+class SearchViewModelImpl(
     private val searchHistoryInteractor: SearchHistoryInteractor,
     private val searchInteractor: SearchInteractor
-) : ViewModel(), SearchContract {
+) : ViewModel(), SearchViewModel {
 
     private val stateHistoryLD = MutableLiveData(searchHistoryInteractor.readListTrack())
     override val stateHistory: LiveData<List<Track>> = stateHistoryLD
@@ -106,7 +106,7 @@ class SearchViewModel(
                 val context = (this[APPLICATION_KEY] as Application).applicationContext
                 val searchHistoryInteractor = Creator.provideSharedPrefRepositoryInteractor(context)
                 val searchInteractor = Creator.provideSearchInteractor()
-                SearchViewModel(searchHistoryInteractor, searchInteractor)
+                SearchViewModelImpl(searchHistoryInteractor, searchInteractor)
             }
         }
     }

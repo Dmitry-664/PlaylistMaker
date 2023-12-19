@@ -1,24 +1,16 @@
 package com.example.playlistmaker.ui.player
 
-import android.icu.text.SimpleDateFormat
-import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.R
 import com.example.playlistmaker.ui.search.SOMETHING_KEY_TRACK
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.models.player.State
-import com.example.playlistmaker.ui.search.SearchViewModel
 import com.google.gson.Gson
-import java.util.Locale
 
 class AudioPlayerActivity : AppCompatActivity() {
 

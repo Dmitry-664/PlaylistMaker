@@ -43,8 +43,8 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var clearButton: ImageView
     private val debounceActivity = DebounceActivity
-    private val viewModel by viewModels<SearchViewModel> {
-        SearchViewModel.getViewModelFactory()
+    private val viewModel: SearchViewModel by viewModels<SearchViewModelImpl> {
+        SearchViewModelImpl.getViewModelFactory()
     }
 
 
@@ -145,7 +145,6 @@ class SearchActivity : AppCompatActivity() {
         }
         viewModel.stateHistory.observe(this) {
             showHistory(it)
-
         }
         viewModel.stateSearch.observe(this) {
             executeState(it)
