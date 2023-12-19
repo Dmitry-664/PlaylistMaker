@@ -9,7 +9,7 @@
         style="@style/MyBackGroundSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.AudioPlayerActivity">
+        tools:context=".ui.player.AudioPlayerActivity">
 
         <Button
             android:id="@+id/buttonBackAudioPlayer"
@@ -79,6 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="54dp"
+            android:clickable="true"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="@id/leftBorder"
             app:layout_constraintTop_toBottomOf="@id/nameGroupAudioPlayer"
@@ -101,6 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="54dp"
+            android:clickable="true"
             app:layout_constraintEnd_toStartOf="@id/rightBorder"
             app:layout_constraintTop_toBottomOf="@id/nameGroupAudioPlayer"
             app:srcCompat="@drawable/ic_live_song" />
