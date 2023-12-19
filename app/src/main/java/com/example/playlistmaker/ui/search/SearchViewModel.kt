@@ -16,15 +16,26 @@ import com.example.playlistmaker.domain.search.api.SearchHistoryInteractor
 import com.example.playlistmaker.domain.search.api.SearchInteractor
 import com.example.playlistmaker.util.Creator
 
+
+interface SearchContract {
+    val stateHistory: LiveData<List<Track>>
+    val stateSearch: LiveData<ViewState>
+
+    fun sendSearch(query: String)
+    fun onDestroyHandlerRemove()
+    fun addTracktoHistoryInvisible(track: Track)
+    fun addTrackToHistory(track: Track)
+    fun clearSearchHistory()
+}
 class SearchViewModel(
     private val searchHistoryInteractor: SearchHistoryInteractor,
     private val searchInteractor: SearchInteractor
-) : ViewModel() {
+) : ViewModel(), SearchContract {
 
     private val stateHistoryLD = MutableLiveData(searchHistoryInteractor.readListTrack())
-    val stateHistory: LiveData<List<Track>> = stateHistoryLD
+    override val stateHistory: LiveData<List<Track>> = stateHistoryLD
     private val stateSearchLD = MutableLiveData<ViewState>()
-    val stateSearch: LiveData<ViewState> = stateSearchLD
+    override val stateSearch: LiveData<ViewState> = stateSearchLD
 
     private val handler = Handler(Looper.getMainLooper())
     private var latestSearchText: String? = null
@@ -33,10 +44,7 @@ class SearchViewModel(
         renderState(ViewState.HistoryLoaded(searchHistoryInteractor.readListTrack()))
     }
 
-    private fun renderState(state: ViewState) {
-        stateSearchLD.postValue(state)
-    }
-    fun sendSearch(query: String) {
+    override fun sendSearch(query: String) {
         latestSearchText = query
         if (query.isEmpty()) {
             renderState(ViewState.HistoryLoaded(searchHistoryInteractor.readListTrack()))
@@ -44,27 +52,31 @@ class SearchViewModel(
             debounceSearch { performSearch(query) }
         }
     }
-    private fun debounceSearch(request: () -> Unit) {
-        handler.removeCallbacksAndMessages(TOKEN)
-        handler.postDelayed({ request() }, TOKEN, DEBOUNCE_DELAY)
-    }
-    fun onDestroyHandlerRemove() {
+
+    override fun onDestroyHandlerRemove() {
         handler.removeCallbacksAndMessages(TOKEN)
     }
     override fun onCleared() {
         super.onCleared()
         handler.removeCallbacksAndMessages(TOKEN)
     }
-    fun addTracktoHistoryInvisible(track: Track) {
+    override fun addTracktoHistoryInvisible(track: Track) {
         searchHistoryInteractor.addTrack(track)
     }
-    fun addTrackToHistory(track: Track) {
+    override fun addTrackToHistory(track: Track) {
         searchHistoryInteractor.addTrack(track)
         renderState(ViewState.HistoryLoaded(searchHistoryInteractor.readListTrack()))
     }
-    fun clearSearchHistory() {
+    override fun clearSearchHistory() {
         searchHistoryInteractor.clear()
         renderState(ViewState.HistoryLoaded(searchHistoryInteractor.readListTrack()))
+    }
+    private fun debounceSearch(request: () -> Unit) {
+        handler.removeCallbacksAndMessages(TOKEN)
+        handler.postDelayed({ request() }, TOKEN, DEBOUNCE_DELAY)
+    }
+    private fun renderState(state: ViewState) {
+        stateSearchLD.postValue(state)
     }
     private fun performSearch(query: String) {
         renderState(ViewState.Loading)
@@ -98,5 +110,4 @@ class SearchViewModel(
             }
         }
     }
-
 }

@@ -103,7 +103,7 @@ class SearchActivity : AppCompatActivity() {
                 Unit
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                clearButton.visibility = clearButtonVisibility(p0)
+                clearButton.isVisible = p0.isNullOrEmpty()
                 currentSearchQuery = inputEditText.text.toString()
                 val queryNew = p0?.toString().orEmpty()
                 currentSearchQuery = queryNew
@@ -130,7 +130,6 @@ class SearchActivity : AppCompatActivity() {
         clearButton.setOnClickListener {
             inputEditText.text?.clear()
             closeKeyboard()
-            Log.e("myLog", "Clear button + $searchHistoryList")
             progressBar.isVisible = false
             trackRv.isVisible = false
             nothingFoundSearch.isVisible = false
@@ -234,11 +233,4 @@ class SearchActivity : AppCompatActivity() {
         searchHistoryLayout.isVisible = false
     }
 
-    private fun clearButtonVisibility(s: CharSequence?): Int {
-        return if (s.isNullOrEmpty()) {
-            View.GONE
-        } else {
-            View.VISIBLE
-        }
-    }
 }
