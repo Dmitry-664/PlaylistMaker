@@ -9,7 +9,6 @@ import com.example.playlistmaker.data.network.RetrofitNetworkClient
 import com.example.playlistmaker.data.player.impl.PlayerRepositoryImpl
 import com.example.playlistmaker.data.search.impl.SearchRepositoryImpl
 import com.example.playlistmaker.data.settings.SettingsRepositoryImpl
-import com.example.playlistmaker.data.settings.SharingRepositoryImpl
 import com.example.playlistmaker.domain.search.api.SearchHistory
 import com.example.playlistmaker.domain.search.api.SearchHistoryInteractor
 import com.example.playlistmaker.domain.search.impl.SearchHistoryInteractorImpl
@@ -21,10 +20,7 @@ import com.example.playlistmaker.domain.search.api.SearchRepository
 import com.example.playlistmaker.domain.search.impl.SearchInteractorImpl
 import com.example.playlistmaker.domain.settings.api.SettingsInteractor
 import com.example.playlistmaker.domain.settings.api.SettingsRepository
-import com.example.playlistmaker.domain.settings.api.SharingInteractor
-import com.example.playlistmaker.domain.settings.api.SharingRepository
 import com.example.playlistmaker.domain.settings.impl.SettingsInteractorImpl
-import com.example.playlistmaker.domain.settings.impl.SharingInteractorImpl
 
 object Creator {
 
@@ -62,13 +58,5 @@ object Creator {
         val sharedPreferences = context.getSharedPreferences(THEME_SHARED_PREFERENCES, Context.MODE_PRIVATE)
         val settingsRepository = getSettingsRepository(sharedPreferences)
         return SettingsInteractorImpl(settingsRepository)
-    }
-
-    private fun getSharedRepository(context: Context): SharingRepository {
-        return SharingRepositoryImpl(context)
-    }
-
-    fun provideSharingInteractor(context: Context): SharingInteractor {
-        return SharingInteractorImpl(getSharedRepository(context))
     }
 }

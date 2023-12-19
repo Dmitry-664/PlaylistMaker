@@ -15,15 +15,15 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient): SearchRepo
                 SearchResults.Success((response as SearchResponse).results.map {
                     Track(
                         trackName = it.trackName,
-                        artistName = it.artistName,
+                        artistName = it.artistName.orEmpty(),
                         trackTimeMillis = it.trackTimeMillis,
-                        artworkUrl100 = it.artworkUrl100,
+                        artworkUrl100 = it.artworkUrl100.orEmpty(),
                         trackId = it.trackId,
-                        collectionName = it.collectionName,
-                        releaseDate = it.releaseDate,
+                        collectionName = it.collectionName.orEmpty(),
+                        releaseDate = it.releaseDate.orEmpty(),
                         primaryGenreName = it.primaryGenreName,
                         country = it.country,
-                        previewUrl = it.previewUrl
+                        previewUrl = it.previewUrl.orEmpty()
                     )
                 })
             }

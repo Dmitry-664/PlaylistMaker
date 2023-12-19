@@ -8,7 +8,7 @@ data class TrackDto(
     val trackId: String, // Ссылка на изображение обложки
     val collectionName: String?,
     val releaseDate: String?,
-    val primaryGenreName: String?,
+    val primaryGenreName: String,
     val country: String,
     val previewUrl: String?
 )

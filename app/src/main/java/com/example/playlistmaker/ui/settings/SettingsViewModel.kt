@@ -8,12 +8,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.playlistmaker.domain.settings.api.SettingsInteractor
-import com.example.playlistmaker.domain.settings.api.SharingInteractor
 import com.example.playlistmaker.util.Creator
 
 class SettingsViewModel(
-    private val settingsInteractor: SettingsInteractor,
-    private val sharingInteractor: SharingInteractor
+    private val settingsInteractor: SettingsInteractor
 ) : ViewModel() {
 
     private val switchThemeLD = MutableLiveData(settingsInteractor.getTheme())
@@ -23,28 +21,15 @@ class SettingsViewModel(
     fun themeSwitcher(isChecked: Boolean) {
         switchThemeLD.value = isChecked
         settingsInteractor.instTheme(isChecked)
-//        ThemeModeNight.switchTheme(isChecked)
     }
 
-    fun shareButton() {
-        sharingInteractor.shareButton()
-    }
-
-    fun supportWrite() {
-        sharingInteractor.supportWrite()
-    }
-
-    fun agreementUser() {
-        sharingInteractor.agreementUser()
-    }
 
     companion object {
         fun getViewModelFactory(context: Context): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
                     val settingsInteractor = Creator.provideSettingsInteractor(context)
-                    val sharingInteractor = Creator.provideSharingInteractor(context)
-                    SettingsViewModel(settingsInteractor, sharingInteractor)
+                    SettingsViewModel(settingsInteractor)
                 }
             }
         }

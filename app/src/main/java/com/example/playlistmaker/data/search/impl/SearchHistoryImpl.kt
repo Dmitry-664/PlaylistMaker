@@ -16,13 +16,12 @@ class SearchHistoryImpl(private val sharedPrefs: SharedPreferences): SearchHisto
     override fun clear() = sharedPrefs.edit().clear().apply()
 
     override fun addTrack(newTrack: Track){
-        var sizeList = readListTrack().toMutableList()
-        sizeList.removeIf { it.trackId == newTrack.trackId }
-        sizeList.add(0, newTrack)
-        if (sizeList.size > SIZE_TRACK) {
-            sizeList = sizeList.subList(0, SIZE_TRACK)
-        }
-        val json = Gson().toJson(sizeList)
+        val json = readListTrack()
+            .filter { it.trackId == newTrack.trackId }
+            .toMutableList()
+            .apply { add(0, newTrack) }
+            .take(SIZE_TRACK)
+            .let(Gson()::toJson)
         sharedPrefs.edit()
             .putString(SHARED_PREF_KEY, json)
             .apply()

@@ -20,7 +20,7 @@ import com.example.playlistmaker.ui.search.SearchViewModel
 import com.google.gson.Gson
 import java.util.Locale
 
-class AudioPlayerActivity : ComponentActivity() {
+class AudioPlayerActivity : AppCompatActivity() {
 
     private lateinit var playerTime: TextView
     private lateinit var track: Track
