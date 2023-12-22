@@ -12,3 +12,4 @@ class SettingsRepositoryImpl(private val sharedPrefs: SharedPreferences): Settin
         sharedPrefs.edit { putBoolean(THEME_PREF_KEY, darkTheme) }
     }
 }
+

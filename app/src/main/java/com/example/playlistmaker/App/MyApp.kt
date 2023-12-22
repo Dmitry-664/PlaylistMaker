@@ -2,15 +2,27 @@ package com.example.playlistmaker.App
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.playlistmaker.util.Creator
+import com.example.playlistmaker.di.dataModule
+import com.example.playlistmaker.di.interactorModule
+import com.example.playlistmaker.di.repositoryModule
+import com.example.playlistmaker.di.viewModelModule
+import com.example.playlistmaker.domain.settings.api.SettingsInteractor
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        val interactor = Creator.provideSettingsInteractor(this)
 
-        val darkTheme = interactor.getTheme()
+        startKoin {
+            androidContext(this@MyApp)
+            modules(dataModule, repositoryModule, interactorModule, viewModelModule)
+        }
+
+        val touchSwitch: SettingsInteractor by inject()
+        val darkTheme = touchSwitch.getTheme()
         switchTheme(darkTheme)
 
     }

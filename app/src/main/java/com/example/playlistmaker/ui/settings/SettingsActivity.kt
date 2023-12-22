@@ -10,14 +10,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.widget.SwitchCompat
 import com.example.playlistmaker.App.MyApp
 import com.example.playlistmaker.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SettingsActivity : AppCompatActivity() {
 
-
-    private val viewModel by viewModels<SettingsViewModel> {
-        SettingsViewModel.getViewModelFactory(this)
-    }
+    private val viewModel by viewModel<SettingsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
