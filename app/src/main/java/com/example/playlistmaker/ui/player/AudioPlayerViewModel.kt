@@ -7,14 +7,9 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.models.player.AudioPlayerState
 import com.example.playlistmaker.domain.models.player.State
 import com.example.playlistmaker.domain.player.api.PlayerInteractor
-import com.example.playlistmaker.util.Creator
 
 class AudioPlayerViewModel(private val playerInteractor: PlayerInteractor) : ViewModel() {
     private val audioStateLD = MutableLiveData(
@@ -90,12 +85,5 @@ class AudioPlayerViewModel(private val playerInteractor: PlayerInteractor) : Vie
     }
     companion object{
         private const val TIME_DELAY = 200L
-
-        fun getViewModelFactory(): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val playerInteractor = Creator.providePlayerInteractor(MediaPlayer())
-                AudioPlayerViewModel(playerInteractor)
-            }
-        }
     }
 }

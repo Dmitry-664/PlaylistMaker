@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.R
 import com.example.playlistmaker.ui.search.SOMETHING_KEY_TRACK
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.models.player.State
 import com.google.gson.Gson
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AudioPlayerActivity : AppCompatActivity() {
 
@@ -18,9 +18,7 @@ class AudioPlayerActivity : AppCompatActivity() {
     private lateinit var track: Track
     private lateinit var audioPlayerViewHolder: AudioPlayerViewHolder
     private lateinit var playAudioPlayer: ImageView
-    private val viewModel by viewModels<AudioPlayerViewModel> {
-        AudioPlayerViewModel.getViewModelFactory()
-    }
+    private val viewModel by viewModel<AudioPlayerViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

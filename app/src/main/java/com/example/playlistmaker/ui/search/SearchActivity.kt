@@ -23,6 +23,7 @@ import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.models.search.ViewState
 import com.example.playlistmaker.ui.activity.DebounceActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SearchActivity : AppCompatActivity() {
@@ -43,9 +44,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var clearButton: ImageView
     private val debounceActivity = DebounceActivity
-    private val viewModel: SearchViewModel by viewModels<SearchViewModelImpl> {
-        SearchViewModelImpl.getViewModelFactory()
-    }
+    private val viewModel by viewModel<SearchViewModelImpl>()
 
 
     override fun onSaveInstanceState(outState: Bundle) {
