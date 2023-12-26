@@ -21,8 +21,8 @@ class MyApp : Application() {
             modules(dataModule, repositoryModule, interactorModule, viewModelModule)
         }
 
-        val touchSwitch: SettingsInteractor by inject()
-        val darkTheme = touchSwitch.getTheme()
+        val settingsInteractor: SettingsInteractor by inject()
+        val darkTheme = settingsInteractor.getTheme()
         switchTheme(darkTheme)
 
     }
