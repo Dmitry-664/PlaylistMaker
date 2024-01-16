@@ -25,4 +25,9 @@
     <string name="genre">Жанр</string>
     <string name="country">Страна</string>
     <string name="zero_time">Нулевое время</string>
+    <string name="live_tracks">Избранные треки</string>
+    <string name="playlist">Плейлисты</string>
+    <string name="media_library_empty">Ваша медиатека пуста</string>
+    <string name="play_list_empty">Вы не создали ни одного плейлиста</string>
+    <string name="new_play_list">Новый плейлист</string>
 </resources>
