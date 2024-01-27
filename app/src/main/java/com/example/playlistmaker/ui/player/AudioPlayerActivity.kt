@@ -34,14 +34,14 @@ class AudioPlayerActivity : AppCompatActivity() {
 
         track = getTrack(intent.getStringExtra(SOMETHING_KEY_TRACK))
 
-        audioPlayerViewHolder!!.bind(track)
-        viewModel.setPlayer(track.previewUrl!!)
-        
+        audioPlayerViewHolder.bind(track)
+        viewModel.setPlayer(track.previewUrl)
+
         viewModel.audioState.observe(this) {
             buttonImage(it.playerState)
         }
 
-        playAudioPlayer?.setOnClickListener {
+        playAudioPlayer.setOnClickListener {
             viewModel.playbackControl()
         }
 
@@ -60,16 +60,16 @@ class AudioPlayerActivity : AppCompatActivity() {
 
     private fun buttonImage(playerState: State) {
         when (playerState) {
-            State.PLAYING -> playAudioPlayer?.setImageResource(R.drawable.ic_play_audio_player_checked)
-            State.PAUSED -> playAudioPlayer?.setImageResource(R.drawable.ic_play_audio_player)
-            State.PREPARED -> playAudioPlayer?.setImageResource(R.drawable.ic_play_audio_player)
+            State.PLAYING -> playAudioPlayer.setImageResource(R.drawable.ic_play_audio_player_checked)
+            State.PAUSED -> playAudioPlayer.setImageResource(R.drawable.ic_play_audio_player)
+            State.PREPARED -> playAudioPlayer.setImageResource(R.drawable.ic_play_audio_player)
             State.DEFAULT -> {}
         }
 
     }
     override fun onPause() {
         super.onPause()
-        playAudioPlayer?.setImageResource(R.drawable.ic_play_audio_player)
+        playAudioPlayer.setImageResource(R.drawable.ic_play_audio_player)
         viewModel.onPause()
     }
 

@@ -3,43 +3,46 @@ package com.example.playlistmaker.ui.settings
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import androidx.appcompat.widget.SwitchCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.playlistmaker.App.MyApp
 import com.example.playlistmaker.R
+import com.example.playlistmaker.databinding.FragmentSettingsBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsFragment : Fragment() {
+
+    private lateinit var binding: FragmentSettingsBinding
 
     private val viewModel by viewModel<SettingsViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-
-
-        val backButton = findViewById<Button>(R.id.buttonBack)
-        backButton.setOnClickListener {
-            finish()
+        binding.switchButton.isChecked = viewModel.switchTheme.value ?: false
+        viewModel.switchTheme.observe(viewLifecycleOwner) { darkTheme ->
+            binding.switchButton.isChecked = darkTheme
+            (binding.root.context.applicationContext as? MyApp)?.switchTheme(darkTheme)
         }
-        val switcher = findViewById<SwitchCompat>(R.id.switchButton)
-        switcher.isChecked = viewModel.switchTheme.value ?: false
-        viewModel.switchTheme.observe(this) { darkTheme ->
-            switcher.isChecked = darkTheme
-            (application as? MyApp)?.switchTheme(darkTheme)
-        }
 
-        switcher.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchButton.setOnCheckedChangeListener { _, isChecked ->
             viewModel.themeSwitcher(isChecked)
         }
 
-        val shareButton = findViewById<Button>(R.id.buttonShare)
-        shareButton.setOnClickListener {
+        binding.buttonShare.setOnClickListener {
             Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 val shareMessage = getString(R.string.praktikum)
@@ -47,8 +50,8 @@ class SettingsActivity : AppCompatActivity() {
                 startActivity(Intent(this))
             }
         }
-        val supportWrite = findViewById<Button>(R.id.writeToSupport)
-        supportWrite.setOnClickListener {
+
+        binding.writeToSupport.setOnClickListener {
             val topic = getString(R.string.support_topic)
             val message = getString(R.string.support_text)
             val intent = Intent(Intent.ACTION_SENDTO)
@@ -58,8 +61,8 @@ class SettingsActivity : AppCompatActivity() {
             intent.putExtra(Intent.EXTRA_TEXT, message)
             startActivity(intent)
         }
-        val agreementUser = findViewById<Button>(R.id.user_agreement)
-        agreementUser.setOnClickListener {
+
+        binding.userAgreement.setOnClickListener {
             val url = getString(R.string.yandex_offer)
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
@@ -67,4 +70,5 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 }
+
 
