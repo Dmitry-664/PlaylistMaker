@@ -19,7 +19,7 @@ class MediaLibraryFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMediaLibraryBinding.inflate(layoutInflater)
+        binding = FragmentMediaLibraryBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 

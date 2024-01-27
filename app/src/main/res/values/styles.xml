@@ -149,4 +149,10 @@
         <item name="tabIndicatorColor">@color/black</item>
         <item name="textAllCaps">false</item>
     </style>
+
+    <style name="BottomNavMenu">
+        <item name="backgroundTint">@color/white</item>
+        <item name="itemIconTint">@color/black1</item>
+        <item name="android:textColor">@color/black1</item>
+    </style>
 </resources>

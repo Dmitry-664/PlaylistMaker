@@ -158,4 +158,10 @@
         <item name="textAllCaps">false</item>
         <item name="android:backgroundTint">@color/black1</item>
     </style>
+
+    <style name="BottomNavMenu">
+        <item name="backgroundTint">@color/black1</item>
+        <item name="itemIconTint">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

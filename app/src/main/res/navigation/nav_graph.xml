@@ -9,7 +9,7 @@
         android:id="@+id/mediaLibraryFragment"
         android:name="com.example.playlistmaker.ui.mediaLibrary.MediaLibraryFragment"
         android:label="MediaLibraryFragment"
-        tools:layout="@layout/fragment_live_tracks">
+        tools:layout="@layout/fragment_media_library">
         <action
             android:id="@+id/action_mediatekaFragment_to_audioPlayerActivity"
             app:destination="@id/audioPlayerActivity" />
