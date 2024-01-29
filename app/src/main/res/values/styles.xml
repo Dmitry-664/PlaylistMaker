@@ -152,7 +152,11 @@
 
     <style name="BottomNavMenu">
         <item name="backgroundTint">@color/white</item>
-        <item name="itemIconTint">@color/black1</item>
-        <item name="android:textColor">@color/black1</item>
+        <item name="itemIconTint">@animator/tab_color_day</item>
+        <item name="itemTextColor">@animator/tab_color_day</item>
+    </style>
+
+    <style name="bottomViewStyle">
+        <item name="android:background">@color/black</item>
     </style>
 </resources>

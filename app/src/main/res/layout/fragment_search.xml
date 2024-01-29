@@ -51,7 +51,8 @@
             android:saveEnabled="false"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textColorHint="@color/text_gray" />
+            android:textColorHint="@color/text_gray"
+            android:textCursorDrawable="@drawable/cursor"/>
 
         <ImageView
             android:id="@+id/clearIcon"
@@ -170,7 +171,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_search_layout"/>
+        tools:listitem="@layout/item_search_layout" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progressBar"

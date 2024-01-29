@@ -83,7 +83,8 @@ class AudioPlayerViewModel(private val playerInteractor: PlayerInteractor) : Vie
             handler.post(conditionTime)
         }
     }
-    companion object{
+
+    companion object {
         private const val TIME_DELAY = 200L
     }
 }
