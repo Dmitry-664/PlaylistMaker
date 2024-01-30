@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    style="@style/MyBackGroudSettings"
-    tools:context=".ui.mediaLibrary.MediaLibraryActivity">
+    style="@style/MyBackGroudSettings">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,17 +13,6 @@
         android:layout_gravity="start"
         android:layout_margin="4dp"
         tools:ignore="MissingConstraints">
-
-        <Button
-            android:id="@+id/buttonBack"
-            style="@style/ButtonSettings"
-            android:layout_width="@dimen/button_w"
-            android:layout_height="@dimen/button_h"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:padding="12dp"
-            app:icon="@drawable/ic_back"
-            app:iconGravity="textStart" />
 
         <TextView
             android:layout_width="match_parent"

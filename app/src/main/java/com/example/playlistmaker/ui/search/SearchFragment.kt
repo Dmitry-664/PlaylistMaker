@@ -5,74 +5,60 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.ProgressBar
-import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.R
+import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.models.search.ViewState
 import com.example.playlistmaker.ui.activity.DebounceActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class SearchActivity : AppCompatActivity() {
+class SearchFragment : Fragment() {
+
+    private lateinit var binding: FragmentSearchBinding
     companion object {
         private const val SEARCH_QUERY = "SEARCH_QUERY"
     }
 
-    private lateinit var inputEditText: EditText
-    private var currentSearchQuery: String = ""
-    private lateinit var trackRv: RecyclerView
-    private lateinit var adapter: SearchAdapter
-    private lateinit var searchAdapter: SearchAdapter
-    private lateinit var rvTrackHistory: RecyclerView
-    private lateinit var searchHistoryLayout: LinearLayout
     private var searchHistoryList: MutableList<Track> = mutableListOf()
     private lateinit var nothingFoundSearch: LinearLayout
     private lateinit var noConnectSearch: LinearLayout
-    private lateinit var progressBar: ProgressBar
-    private lateinit var clearButton: ImageView
+    private var currentSearchQuery: String = ""
+    private lateinit var adapter: SearchAdapter
+    private lateinit var searchAdapter: SearchAdapter
     private val debounceActivity = DebounceActivity
     private val viewModel by viewModel<SearchViewModelImpl>()
 
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(SEARCH_QUERY, currentSearchQuery)
-    }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        inputEditText.setText(savedInstanceState.getString(SEARCH_QUERY))
-    }
 
     @SuppressLint("MissingInflatedId", "NotifyDataSetChanged")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        searchHistoryLayout = findViewById(R.id.searchHistoryLayout)
-        rvTrackHistory = findViewById(R.id.rvTracksHistory)
-        trackRv = findViewById(R.id.rvTracks)
-        inputEditText = findViewById(R.id.inputEditText)
-        nothingFoundSearch = findViewById(R.id.nothing_found_search_layout)
-        noConnectSearch = findViewById(R.id.no_connect_layout)
-        val searchRefreshButton = findViewById<Button>(R.id.search_refresh)
-        val clearHistoryButton = findViewById<Button>(R.id.clearHistoryButton)
-        val backButton = findViewById<Button>(R.id.buttonBack)
-        clearButton = findViewById(R.id.clearIcon)
-        progressBar = findViewById(R.id.progressBar)
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        nothingFoundSearch = binding.nothingFoundSearchLayout
+        noConnectSearch = binding.noConnectLayout
+        val searchRefreshButton = binding.searchRefresh
+        val clearHistoryButton = binding.clearHistoryButton
+
 
         adapter = SearchAdapter {
             if (debounceActivity.clickDebounce()) {
@@ -86,15 +72,12 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        trackRv.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        trackRv.adapter = adapter
+        binding.rvTracks.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rvTracks.adapter = adapter
 
-        rvTrackHistory.adapter = searchAdapter
+        binding.rvTracksHistory.adapter = searchAdapter
 
-        backButton.setOnClickListener {
-            finish()
-        }
 
 
         val textWatcher = object : TextWatcher {
@@ -102,8 +85,8 @@ class SearchActivity : AppCompatActivity() {
                 Unit
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                clearButton.visibility = clearButtonVisibility(p0)
-                currentSearchQuery = inputEditText.text.toString()
+                binding.clearIcon.visibility = clearButtonVisibility(p0)
+                currentSearchQuery = binding.inputEditText.text.toString()
                 val queryNew = p0?.toString().orEmpty()
                 currentSearchQuery = queryNew
                 viewModel.sendSearch(queryNew)
@@ -112,40 +95,40 @@ class SearchActivity : AppCompatActivity() {
             override fun afterTextChanged(p0: Editable?) = Unit
         }
         textWatcher.let {
-            inputEditText.addTextChangedListener(it)
+            binding.inputEditText.addTextChangedListener(it)
         }
 
-        inputEditText.setOnFocusChangeListener { _, hasFocus ->
-            trackRv.isVisible = false
-            if (searchHistoryList.isNotEmpty() && hasFocus && inputEditText.text.isNullOrEmpty()) {
-                searchHistoryLayout.isVisible = true
+        binding.inputEditText.setOnFocusChangeListener { _, hasFocus ->
+            binding.rvTracks.isVisible = false
+            if (searchHistoryList.isNotEmpty() && hasFocus && binding.inputEditText.text.isNullOrEmpty()) {
+                binding.searchHistoryLayout.isVisible = true
             } else View.GONE
         }
         searchRefreshButton.setOnClickListener {
             viewModel.sendSearch(currentSearchQuery)
         }
 
-        clearButton.visibility = View.INVISIBLE
-        clearButton.setOnClickListener {
-            inputEditText.text?.clear()
+        binding.clearIcon.visibility = View.INVISIBLE
+        binding.clearIcon.setOnClickListener {
+            binding.inputEditText.text?.clear()
             closeKeyboard()
-            progressBar.isVisible = false
-            trackRv.isVisible = false
+            binding.progressBar.isVisible = false
+            binding.rvTracks.isVisible = false
             nothingFoundSearch.isVisible = false
             noConnectSearch.isVisible = false
-            searchHistoryLayout.isVisible = false
+            binding.searchHistoryLayout.isVisible = false
             searchAdapter.notifyDataSetChanged()
-            inputEditText.clearFocus()
+            binding.inputEditText.clearFocus()
         }
 
         clearHistoryButton.setOnClickListener {
             viewModel.clearSearchHistory()
             searchAdapter.notifyItemRangeChanged(0, 10)
         }
-        viewModel.stateHistory.observe(this) {
+        viewModel.stateHistory.observe(viewLifecycleOwner) {
             showHistory(it)
         }
-        viewModel.stateSearch.observe(this) {
+        viewModel.stateSearch.observe(viewLifecycleOwner) {
             executeState(it)
         }
     }
@@ -157,8 +140,8 @@ class SearchActivity : AppCompatActivity() {
 
     private fun closeKeyboard() {
         val inputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        inputMethodManager?.hideSoftInputFromWindow(inputEditText.windowToken, 0)
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        inputMethodManager?.hideSoftInputFromWindow(binding.inputEditText.windowToken, 0)
     }
 
 
@@ -174,11 +157,11 @@ class SearchActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showTracks(tracks: List<Track>?) {
-        progressBar.isVisible = false
-        trackRv.isVisible = true
+        binding.progressBar.isVisible = false
+        binding.rvTracks.isVisible = true
         nothingFoundSearch.isVisible = false
         noConnectSearch.isVisible = false
-        searchHistoryLayout.isVisible = false
+        binding.searchHistoryLayout.isVisible = false
         with (adapter) {
             trackList.clear()
             trackList.addAll(tracks!!)
@@ -188,47 +171,47 @@ class SearchActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showHistory(historyTracks: List<Track>) {
-        progressBar.isVisible = false
-        trackRv.isVisible = false
+        binding.progressBar.isVisible = false
+        binding.rvTracks.isVisible = false
         nothingFoundSearch.isVisible = false
         noConnectSearch.isVisible = false
         if (historyTracks.isNotEmpty()) {
-            searchHistoryLayout.isVisible = true
+            binding.searchHistoryLayout.isVisible = true
             with(searchAdapter) {
                 trackList.clear()
                 trackList.addAll(historyTracks)
                 notifyItemRangeChanged(0, historyTracks.size)
             }
         } else  {
-            searchHistoryLayout.isVisible = false
+            binding.searchHistoryLayout.isVisible = false
         }
     }
 
     private fun showNoConnection() {
-        progressBar.isVisible = false
-        trackRv.isVisible = false
+        binding.progressBar.isVisible = false
+        binding.rvTracks.isVisible = false
         nothingFoundSearch.isVisible = false
         noConnectSearch.isVisible = true
-        searchHistoryLayout.isVisible = false
+        binding.searchHistoryLayout.isVisible = false
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showProgressBar() {
-        progressBar.isVisible = true
-        trackRv.isVisible = false
+        binding.progressBar.isVisible = true
+        binding.rvTracks.isVisible = false
         nothingFoundSearch.isVisible = false
         noConnectSearch.isVisible = false
-        searchHistoryLayout.isVisible = false
+        binding.searchHistoryLayout.isVisible = false
         adapter.trackList.clear()
         adapter.notifyDataSetChanged()
     }
 
     private fun showNothing() {
-        progressBar.isVisible = false
-        trackRv.isVisible = false
+        binding.progressBar.isVisible = false
+        binding.rvTracks.isVisible = false
         nothingFoundSearch.isVisible = true
         noConnectSearch.isVisible = false
-        searchHistoryLayout.isVisible = false
+        binding.searchHistoryLayout.isVisible = false
     }
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {

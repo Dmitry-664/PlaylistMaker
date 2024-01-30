@@ -64,8 +64,8 @@ class AudioPlayerViewModel(private val playerInteractor: PlayerInteractor) : Vie
 
     fun setPlayer(trackPreviewUrl: String) {
         playerInteractor.preparePlayer(trackPreviewUrl)
-        playerInteractor.prepareAsync()
         playerInteractor.setOnPreparedListener { setState(State.PREPARED) }
+        playerInteractor.prepareAsync()
         playerInteractor.setOnCompletionListener {
             handler.removeCallbacks(conditionTime)
             setTimer()
@@ -83,7 +83,8 @@ class AudioPlayerViewModel(private val playerInteractor: PlayerInteractor) : Vie
             handler.post(conditionTime)
         }
     }
-    companion object{
+
+    companion object {
         private const val TIME_DELAY = 200L
     }
 }
